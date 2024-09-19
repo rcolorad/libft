@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: rcolorad <rcolorad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/01/12 15:23:53 by rcolorad          #+#    #+#              #
-#    Updated: 2024/09/19 23:40:37 by rcolorad         ###   ########.fr        #
+#    Created: 2024/09/20 00:41:30 by rcolorad          #+#    #+#              #
+#    Updated: 2024/09/20 00:41:30 by rcolorad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,14 @@ FILES = $(addprefix $(CTYPE_DIR), $(CTYPE_FILES))\
 SRC	= $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJ	= $(addprefix $(BIN_DIR), $(addsuffix .o, $(FILES)))
 
-all: ${NAME}
+MPRINTF = ${MAKE} -C ./printf
+
+all: libft printf
+
+libft: ${NAME}
+
+printf:
+	$(MPRINTF)
 
 ${NAME}: ${OBJ}
 	@echo "Creating library..."
@@ -99,14 +106,16 @@ $(BIN_DIR)%.o: $(SRC_DIR)%.c
 
 clean:
 	@echo "Cleaning up object files..."
-	$(RM) $(RMFLAGS) $(OBJ)
-	$(RM) $(RMFLAGS) $(BIN_DIR)
+	@$(RM) $(RMFLAGS) $(OBJ)
+	@$(RM) $(RMFLAGS) $(BIN_DIR)
+	@${MPRINTF} clean
 	@echo "Object files cleaned."
 
 fclean: clean
 	@echo "Removing library..."
-	$(RM) $(RMFLAGS) $(NAME)
-	$(RM) $(RMFLAGS) $(BIN_DIR)
+	@$(RM) $(RMFLAGS) $(NAME)
+	@$(RM) $(RMFLAGS) $(BIN_DIR)
+	@${MPRINTF} fclean
 	@echo "Library removed."
 
 re: fclean all
